@@ -5,4 +5,5 @@ A website wrapper to help developers understand how people with accessibility is
 
 Ideas / game plan
 --------
-- Use canvas to capture an entire page, manipulate the image and place it exactly in the same place 
+- Simulate Alzheimer's, color blindness, other accesibility issues
+- For color blindness, use canvas to capture an entire page, manipulate the image and place it exactly in the same place    
