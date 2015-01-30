@@ -5,8 +5,13 @@ A website wrapper to help developers understand how people with accessibility is
 
 Ideas / game plan
 --------
-- Blindness?
+- Blindness? Color blindness ✓
 - Low vision (macular degeneration, glaucoma, Diabetic retinopathy, cataracts)
 - Hearing loss (mild to severe, high tone, low tone, deaf-blindness?)
 - Motor disabilities (requiring tab navigation only, Parkinson's)
 - Cognitive disorders? Scrambeled text, maybe
+
+
+Todo:
+- Fade in new image
+- Pre-render color blindness
