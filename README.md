@@ -5,5 +5,8 @@ A website wrapper to help developers understand how people with accessibility is
 
 Ideas / game plan
 --------
-- Simulate Alzheimer's, color blindness, other accesibility issues
-- For color blindness, use canvas to capture an entire page, manipulate the image and place it exactly in the same place    
+- Blindness?
+- Low vision (macular degeneration, glaucoma, Diabetic retinopathy, cataracts)
+- Hearing loss (mild to severe, high tone, low tone, deaf-blindness?)
+- Motor disabilities (requiring tab navigation only, Parkinson's)
+- Cognitive disorders? Scrambeled text, maybe
