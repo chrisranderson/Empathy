@@ -8,7 +8,18 @@ define(function () {
         return document.querySelectorAll(selector);
     };
 
-    window.element = function (type) {
-        return document.createElement(type);
+    window.newElement = function (type, newClass, styles) {
+        var output = document.createElement(type);
+        if (typeof newClass != 'undefined') output.classList.add(newClass);
+        if (typeof styles != 'undefined') window.setStyles(output, styles);
+        return output;
     };
+
+    window.setStyles = function (element, styles) {
+        for (var property in styles) {
+            if (styles.hasOwnProperty(property)) {
+                element.style.setProperty(property, styles[property]);
+            }
+        }
+    }
 });
