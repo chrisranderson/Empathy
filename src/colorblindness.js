@@ -26,6 +26,8 @@ define(['../lib/colorvision', '../lib/html2canvas', '../src/helpers'], function 
         getImageFromHtml(function (screenshotCanvas) {
             screenshot = newElement('img');
             screenshot.setAttribute('src', screenshotCanvas.toDataURL());
+
+            // TODO: feed color.vision something besides an img.
             Color.Vision.Simulate(screenshot, {
                 type: type, callback: appendNewImage
             });
