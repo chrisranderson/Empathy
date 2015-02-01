@@ -37,7 +37,7 @@ define(['../lib/colorvision', '../lib/html2canvas', '../src/helpers'], function 
 
         newImage = newElement('img', 'colorAlteration', {
             position: 'absolute',
-            top: '-7px',
+            top: '0px',
             left: '0px',
             'z-index': '-1' // can't have - in a property name
         });
@@ -55,8 +55,8 @@ define(['../lib/colorvision', '../lib/html2canvas', '../src/helpers'], function 
         window.requestAnimationFrame(function requestFrame(timestamp) {
             if (animationStart == null) animationStart = timestamp;
             var progress = timestamp - animationStart;
-            container.style.opacity = (1 -progress/timeLimit)
-            var progress = timestamp - animationStart;
+            container.style.opacity = (1 -progress/timeLimit);
+            progress = timestamp - animationStart;
             if (progress < timeLimit) {
                 requestAnimationFrame(requestFrame);
             } else {
