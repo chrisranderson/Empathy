@@ -1,40 +1,41 @@
-{
-  "manifest_version": 2,
-
-  "name": "Empathy",
-  "version": "0.1",
-
-  "description": "Simulate accessibility issues for websites.",
-
-  "browser_action": {
-    "default_icon": "empathy19.png",
-    "default_title": "Empathy!"
-  },
-
-  "permissions": [
-    "activeTab",
-    "contextMenus",
-    "desktopCapture",
-    "tabCapture",
-    "tts" // Text-to-speech
-  ],
-
-  "background":   {
-    "scripts": [
-      "boot.js"
-    ],
-    "persistent": false
-  },
-
-  "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": [
-        "src/helpers.js",
-        "src/colorblindness.js",
-        "lib/colorvision.js",
-        "lib/html2canvas.js"
+      "manifest_version": 2,
+
+      "name": "Empathy",
+      "version": "0.1",
+
+      "description": "Simulate accessibility issues for websites.",
+
+      "browser_action": {
+        "default_icon": "empathy19.png",
+        "default_title": "Empathy!"
+      },
+
+      "permissions": [
+        "activeTab",
+        "<all_urls>",
+        "contextMenus",
+        "desktopCapture",
+        "tabCapture",
+        "tts" // Text-to-speech
+      ],
+
+      "background":   {
+        "scripts": [
+          "boot.js"
+        ],
+        "persistent": false
+      },
+
+      "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": [
+            "src/helpers.js",
+            "src/colorblindness.js",
+            "lib/colorvision.js",
+            "lib/html2canvas.js"
+          ]
+        }
       ]
     }
-  ]
-}

@@ -13,9 +13,6 @@ function EmpathyBar () {
 var empathy = new EmpathyBar();
 empathy.load();
 
-
-
-
 // Global mouse handling
 window.mouseIsDown = false;
 window.dragElement = null;

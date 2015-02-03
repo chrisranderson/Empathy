@@ -23,15 +23,24 @@ function ColorBlindnessSimulator() {
 
         var type = event.target.selectedOptions[0].value;
         var screenshot;
-        html2canvas().then(function (screenshotCanvas) {
-            screenshot = newElement('img');
-            screenshot.setAttribute('src', screenshotCanvas.toDataURL());
+        chrome.runtime.sendMessage({name: 'screenshot'}, function (dataUrl) {
+                screenshot = newElement('img');
+                screenshot.setAttribute('src', dataUrl);
 
-            // TODO: feed color.vision the canvas directly
-            Color.Vision.Simulate(screenshot, {
-                type: type, callback: appendNewImage
-            });
+                // TODO: feed color.vision the dataURL directly
+                Color.Vision.Simulate(screenshot, {
+                    type: type, callback: appendNewImage
+                });
         });
+        //html2canvas().then(function (screenshotCanvas) {
+        //    screenshot = newElement('img');
+        //    screenshot.setAttribute('src', screenshotCanvas.toDataURL());
+        //
+        //    // TODO: feed color.vision the canvas directly
+        //    Color.Vision.Simulate(screenshot, {
+        //        type: type, callback: appendNewImage
+        //    });
+        //});
     }
 
     // Called when the new colored image is finished rendering
