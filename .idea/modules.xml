@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/empathy.js.iml" filepath="$PROJECT_DIR$/.idea/empathy.js.iml" />
+      <module fileurl="file://$USER_HOME$/empathy/.idea/empathy.js.iml" filepath="$USER_HOME$/empathy/.idea/empathy.js.iml" />
     </modules>
   </component>
 </project>

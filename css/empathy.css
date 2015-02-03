@@ -1,0 +1,13 @@
+.empathyBar {
+    position: fixed;
+    bottom: 0;
+    height: 20px;
+    background: #ddd;
+    width: 100%;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    padding: 10px;
+    z-index: 999;
+}
+.empathyBar label {
+    margin-right: 10px;
+}

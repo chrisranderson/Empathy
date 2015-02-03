@@ -1,7 +1,7 @@
-empathy.js
+Empathy
 ==========
 
-A website wrapper to help developers understand how people with accessibility issues experience their site.
+A Chrome extension to help developers understand how people with accessibility issues experience their site.
 
 This is brand, brand new. I'm not sure how I want code to be organized, and most everything I've written has been in a
 whirlwind of "wow this is fun". That said, to get an idea:
@@ -12,9 +12,13 @@ whirlwind of "wow this is fun". That said, to get an idea:
     
 That's all that is working for right now.
 
+Features
+--------------
+- Colorblindness: use a sliding window to compare the colorblind version of the site with the original
+
 Ideas / game plan
 --------
-- Blindness? Color blindness ✓
+- Blindness?
 - Low vision (macular degeneration, glaucoma, Diabetic retinopathy, cataracts)
 - Hearing loss (mild to severe, high tone, low tone, deaf-blindness?)
 - Motor disabilities (requiring tab navigation only, Parkinson's)

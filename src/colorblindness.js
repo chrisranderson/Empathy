@@ -1,4 +1,4 @@
-define(['../lib/colorvision', '../lib/html2canvas', '../src/helpers'], function () {
+function getColorBlindness() {
 
     var output = newElement('div');
     output.classList.add('item');
@@ -18,8 +18,9 @@ define(['../lib/colorvision', '../lib/html2canvas', '../src/helpers'], function 
 
     return output;
 
+    // The initial event
     function blindnessChanged(event) {
-        resetEverything();
+        preparePage();
 
         var type = event.target.selectedOptions[0].value;
         var screenshot;
@@ -27,13 +28,14 @@ define(['../lib/colorvision', '../lib/html2canvas', '../src/helpers'], function 
             screenshot = newElement('img');
             screenshot.setAttribute('src', screenshotCanvas.toDataURL());
 
-            // TODO: feed color.vision something besides an img.
+            // TODO: feed color.vision the canvas directly
             Color.Vision.Simulate(screenshot, {
                 type: type, callback: appendNewImage
             });
         });
     }
 
+    // Called when the new colored image is finished rendering
     function appendNewImage(modifiedImageCanvas) {
         var newImage;
 
@@ -50,6 +52,7 @@ define(['../lib/colorvision', '../lib/html2canvas', '../src/helpers'], function 
         qs('.empathyBar').style.display = 'block';
     }
 
+    // Fades in the new image
     function fadeInImage(){
         var container = qs('.siteContainer');
         var animationStart = null;
@@ -67,15 +70,20 @@ define(['../lib/colorvision', '../lib/html2canvas', '../src/helpers'], function 
         })
     }
 
+    // Generates a canvas element from the entire DOM
     function getImageFromHtml(callback) {
         html2canvas().then(function (data) {
             callback(data);
         });
     }
 
-    function resetEverything(){
+    // Called before
+    function preparePage(){
         var oldImage = qs('.colorAlteration');
         if (oldImage) qs('body').removeChild(oldImage);
+        if (!qs('.siteContainer')) {
+            addSiteContainer();
+        }
         qs('.siteContainer').style.opacity = 1;
         qs('.empathyBar').style.display = 'none';
     }
@@ -97,7 +105,7 @@ define(['../lib/colorvision', '../lib/html2canvas', '../src/helpers'], function 
         var element = newElement('div', 'slideWindow', {
             overflow: 'hidden',
             display: 'inline-block',
-            height: '200%',
+            height: documentHeight()+'px',
             position: 'absolute',
             top: '0',
             width: '50%'
@@ -116,13 +124,36 @@ define(['../lib/colorvision', '../lib/html2canvas', '../src/helpers'], function 
         });
         slideHandle.textContent = '⬄';
         slideHandle.isSlideHandle = true;
-        slideHandle.move = function(event) {
-            console.log('should move');
+
+        slideHandle.move = function move(event) {
+            event.preventDefault();
             this.parentElement.style.width = event.clientX + 'px';
         };
+
         element.appendChild(slideHandle);
         return element;
     }
-});
+
+    function documentHeight() {
+        var body = document.body,
+            html = document.documentElement;
+
+        return Math.max(body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight);
+    }
+
+    function addSiteContainer(){
+        var body = qs('body');
+        var children = [].slice.apply(body.children);
+        var siteContainer = newElement('div', 'siteContainer');
+        children.forEach(function (child) {
+            if (child.classList.contains('empathyBar')) return;
+            body.removeChild(child);
+            siteContainer.appendChild(child);
+        });
+        body.appendChild(siteContainer);
+    }
+}
+
 
 
