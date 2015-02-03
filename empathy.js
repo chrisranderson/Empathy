@@ -1,12 +1,22 @@
-appendControls();
+function EmpathyBar () {
+    self = newElement('div', 'empathyBar');
+    self.appendChild(new ColorBlindnessSimulator());
 
-function appendControls() {
-    var bar = newElement('div');
-    bar.classList.add('empathyBar');
-    bar.appendChild(getColorBlindness());
-    qs('body').appendChild(bar);
+    self.load = function(){
+        qs('body').appendChild(this);
+    };
+
+    return self;
 }
 
+
+var empathy = new EmpathyBar();
+empathy.load();
+
+
+
+
+// Global mouse handling
 window.mouseIsDown = false;
 window.dragElement = null;
 

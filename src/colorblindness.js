@@ -1,8 +1,7 @@
-function getColorBlindness() {
+function ColorBlindnessSimulator() {
 
-    var output = newElement('div');
-    output.classList.add('item');
-    output.innerHTML = '' +
+    var self = newElement('div', 'item');
+    self.innerHTML = '' +
     '<label>Colorblindness</label>' +
     '<select name="blindnessType" id="blindnessType">' +
     '    <option value="normal">Normal</option>' +
@@ -13,18 +12,18 @@ function getColorBlindness() {
     '</select>' +
     '<button class="slideComparison">Compare to original</button>';
 
-    output.querySelector('select').addEventListener('change', blindnessChanged);
-    output.querySelector('button.slideComparison').addEventListener('click', startComparison);
+    self.querySelector('select').addEventListener('change', blindnessTypeSelected);
+    self.querySelector('button.slideComparison').addEventListener('click', startComparison);
 
-    return output;
+    return self;
 
     // The initial event
-    function blindnessChanged(event) {
+    function blindnessTypeSelected(event) {
         preparePage();
 
         var type = event.target.selectedOptions[0].value;
         var screenshot;
-        getImageFromHtml(function (screenshotCanvas) {
+        html2canvas().then(function (screenshotCanvas) {
             screenshot = newElement('img');
             screenshot.setAttribute('src', screenshotCanvas.toDataURL());
 
@@ -65,13 +64,6 @@ function getColorBlindness() {
         })
     }
 
-    // Generates a canvas element from the entire DOM
-    function getImageFromHtml(callback) {
-        html2canvas().then(function (data) {
-            callback(data);
-        });
-    }
-
     // Called before
     function preparePage(){
         var oldImage = qs('.colorAlteration');
@@ -96,41 +88,44 @@ function getColorBlindness() {
         body.appendChild(slideWindow);
     }
 
-    function SlideWindow () {
-        var element = newElement('div', 'slideWindow');
-        element.style.height = documentHeight();
-        var slideHandle = newElement('div', 'slideHandle');
-        slideHandle.textContent = '⬄';
-        slideHandle.isSlideHandle = true;
-
-        slideHandle.move = function move(event) {
-            event.preventDefault();
-            this.parentElement.style.width = event.clientX + 'px';
-        };
-
-        element.appendChild(slideHandle);
-        return element;
-    }
-
     function addSiteContainer(){
         var body = qs('body');
         var children = [].slice.apply(body.children);
         var siteContainer = newElement('div', 'siteContainer');
         children.forEach(function (child) {
             if (child.classList.contains('empathyBar')) return;
-            body.removeChild(child);
             siteContainer.appendChild(child);
         });
         body.appendChild(siteContainer);
     }
 
-    function documentHeight() {
-        var body = document.body,
-            html = document.documentElement;
+}
 
-        return Math.max(body.scrollHeight, body.offsetHeight,
+function SlideWindow () {
+    var self = newElement('div', 'slideWindow');
+    self.style.height = documentHeight();
+    var slideHandle = new SlideHandle();
+    self.appendChild(slideHandle);
+    return self;
+}
+
+function SlideHandle () {
+    var self = newElement('div', 'slideHandle');
+    self.isSlideHandle = true;
+    self.textContent = '⬄';
+    self.move = function move(event) {
+        event.preventDefault();
+        this.parentElement.style.width = event.clientX + 'px';
+    };
+    return self;
+}
+
+function documentHeight() {
+    var body = document.body,
+        html = document.documentElement;
+
+    return Math.max(body.scrollHeight, body.offsetHeight,
             html.clientHeight, html.scrollHeight, html.offsetHeight)+'px';
-    }
 }
 
 
