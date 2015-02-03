@@ -1,7 +1,7 @@
 .empathyBar {
     position: fixed;
     bottom: 0;
-    height: 20px;
+    height: 45px;
     background: #ddd;
     width: 100%;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -10,4 +10,30 @@
 }
 .empathyBar label {
     margin-right: 10px;
+}
+.colorAlteration {
+    position: absolute;
+    top: 0;
+    left: -9px;
+    z-index: -1
+}
+.slideWindow {
+    overflow: hidden;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    width: 50%
+}
+
+div.slideHandle {
+    width: 8px;
+    height: 100%;
+    position: absolute;
+    background: #ccc;
+    right: 0;
+    top: 0;
+    cursor: col-resize;
+    border: solid 1px rgb(87, 87, 87);
+    color: white;
+    z-index: 100
 }

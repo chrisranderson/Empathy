@@ -39,12 +39,7 @@ function getColorBlindness() {
     function appendNewImage(modifiedImageCanvas) {
         var newImage;
 
-        newImage = newElement('img', 'colorAlteration', {
-            position: 'absolute',
-            top: '0px',
-            left: '0px',
-            'z-index': '-1' // can't have - in a property name
-        });
+        newImage = newElement('img', 'colorAlteration');
 
         newImage.setAttribute('src', modifiedImageCanvas.toDataURL());
         qs('body').appendChild(newImage);
@@ -102,26 +97,9 @@ function getColorBlindness() {
     }
 
     function SlideWindow () {
-        var element = newElement('div', 'slideWindow', {
-            overflow: 'hidden',
-            display: 'inline-block',
-            height: documentHeight()+'px',
-            position: 'absolute',
-            top: '0',
-            width: '50%'
-        });
-        var slideHandle = newElement('div', 'slideHandle', {
-            width: '8px',
-            height: '100%',
-            position: 'absolute',
-            background: '#ccc',
-            right: '0',
-            top: '0',
-            cursor: 'col-resize',
-            border: 'solid 1px rgb(87, 87, 87)',
-            color: 'white',
-            'z-index': '100'
-        });
+        var element = newElement('div', 'slideWindow');
+        element.style.height = documentHeight();
+        var slideHandle = newElement('div', 'slideHandle');
         slideHandle.textContent = '⬄';
         slideHandle.isSlideHandle = true;
 
@@ -134,14 +112,6 @@ function getColorBlindness() {
         return element;
     }
 
-    function documentHeight() {
-        var body = document.body,
-            html = document.documentElement;
-
-        return Math.max(body.scrollHeight, body.offsetHeight,
-            html.clientHeight, html.scrollHeight, html.offsetHeight);
-    }
-
     function addSiteContainer(){
         var body = qs('body');
         var children = [].slice.apply(body.children);
@@ -152,6 +122,14 @@ function getColorBlindness() {
             siteContainer.appendChild(child);
         });
         body.appendChild(siteContainer);
+    }
+
+    function documentHeight() {
+        var body = document.body,
+            html = document.documentElement;
+
+        return Math.max(body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight)+'px';
     }
 }
 
