@@ -1,40 +1,67 @@
 .empathyBar {
-    position: fixed;
-    bottom: 0;
-    height: 45px;
-    background: #ddd;
-    width: 100%;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    padding: 10px;
-    z-index: 9999999999;
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  height: 110px;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 0 0 5px black;
+  background: whitesmoke;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  z-index: 9999999999;
 }
 .empathyBar label {
-    margin-right: 10px;
+  margin-right: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
 }
-.colorAlteration {
-    position: fixed;
-    top: 0;
-    left: 0px;
-    z-index: -1
+.empathyBar button {
+  cursor: pointer;
+}
+.empathyBar .row {
+  margin-bottom: 10px;
+}
+.empathyBar .item {
+  display: flex;
+  flex-direction: column;
+}
+.simulationOptions button {
+  width: 100px;
+  padding: 5px;
+  margin-right: 4px;
+  margin-bottom: 8px;
+}
+.colorSimulation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 .slideWindow {
-    overflow: hidden;
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    width: 50%;
-    z-index: 999999;
+  overflow: hidden;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 50%;
+  z-index: 999999;
+  box-shadow: black 0 0 15px;
 }
-
-div.slideHandle {
-    width: 8px;
-    height: 100%;
-    position: absolute;
-    background: #ccc;
-    right: 0;
-    top: 0;
-    cursor: col-resize;
-    border: solid 1px rgb(87, 87, 87);
-    color: white;
-    z-index: 9999999
+.slideWindow .slideHandle {
+  width: 8px;
+  height: 100%;
+  position: absolute;
+  background: #ccc;
+  right: 0;
+  top: 0;
+  cursor: col-resize;
+  border: solid 1px #575757;
+  color: white;
+  z-index: 9999999;
+}
+.hidden {
+  display: none;
+}
+* {
+  box-sizing: border-box;
 }

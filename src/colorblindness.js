@@ -2,17 +2,20 @@ function ColorBlindnessSimulator() {
 
     var self = newElement('div', 'item');
     self.innerHTML = '' +
-    '<label>Colorblindness</label>' +
-    '<select name="blindnessType" id="blindnessType">' +
-    '    <option value="normal">Normal</option>' +
-    '    <option value="achromatope">Achromatope</option>' +
-    '    <option value="protanope">Protanope</option>' +
-    '    <option value="deuteranope">Deuteranope</option>' +
-    '    <option value="tritanope">Tritanope</option>' +
-    '</select>' +
-    '<button class="slideComparison">Compare to original</button>';
+    '<div class="row">' +
+    '   <label>Colorblindness</label>' +
+    '   <button class="hidden revert">Revert</button>' +
+    '   <button class="slideComparison hidden">Compare to original</button>' +
+    '</div>'+
+    '<div class="simulationOptions">' +
+    '    <button value="achromatope">Achromatope</button>' +
+    '    <button value="protanope">Protanope</button>' +
+    '    <br/>' +
+    '    <button value="deuteranope">Deuteranope</button>' +
+    '    <button value="tritanope">Tritanope</button>' +
+    '</div>';
 
-    self.querySelector('select').addEventListener('change', blindnessTypeSelected);
+    self.querySelector('div.simulationOptions').addEventListener('click', blindnessTypeSelected);
     self.querySelector('button.slideComparison').addEventListener('click', startComparison);
 
     return self;
@@ -21,72 +24,53 @@ function ColorBlindnessSimulator() {
     function blindnessTypeSelected(event) {
         preparePage();
 
-        var type = event.target.selectedOptions[0].value;
+        var type = event.target.getAttribute('value');
         var screenshot;
-        chrome.runtime.sendMessage({name: 'screenshot'}, function (dataUrl) {
-                screenshot = newElement('img');
-                screenshot.setAttribute('src', dataUrl);
+        chrome.runtime.sendMessage({name: 'screenshot'}, function screenshotComplete(dataUrl) {
+            screenshot = newElement('img');
+            screenshot.setAttribute('src', dataUrl);
 
-                // TODO: feed color.vision the dataURL directly
-                Color.Vision.Simulate(screenshot, {
-                    type: type, callback: appendNewImage
-                });
+            // TODO: feed color.vision the dataURL directly
+            Color.Vision.Simulate(screenshot, {
+                type: type, callback: renderingFinished
+            });
         });
         //html2canvas().then(function (screenshotCanvas) {
         //    screenshot = newElement('img');
         //    screenshot.setAttribute('src', screenshotCanvas.toDataURL());
-        //
         //    // TODO: feed color.vision the canvas directly
         //    Color.Vision.Simulate(screenshot, {
-        //        type: type, callback: appendNewImage
+        //        type: type, callback: renderingFinished
         //    });
         //});
     }
 
-    // Called when the new colored image is finished rendering
-    function appendNewImage(modifiedImageCanvas) {
-        var newImage;
-
-        newImage = newElement('img', 'colorAlteration');
-
-        newImage.setAttribute('src', modifiedImageCanvas.toDataURL());
-        qs('body').appendChild(newImage);
-        fadeInImage();
-        qs('.empathyBar').style.display = 'block';
-    }
-
-    // Fades in the new image
-    function fadeInImage(){
-        var container = qs('.siteContainer');
-        var animationStart = null;
-        var timeLimit = 2000; // ms
-        window.requestAnimationFrame(function requestFrame(timestamp) {
-            if (animationStart == null) animationStart = timestamp;
-            var progress = timestamp - animationStart;
-            container.style.opacity = (1 -progress/timeLimit);
-            progress = timestamp - animationStart;
-            if (progress < timeLimit) {
-                requestAnimationFrame(requestFrame);
-            } else {
-                container.style.opacity = 0;
-            }
-        })
-    }
-
     // Called before
     function preparePage(){
-        var oldImage = qs('.colorAlteration');
+        qs('.empathyBar').style.opacity = 0;
+
+        var oldImage = qs('.colorSimulation');
         if (oldImage) qs('body').removeChild(oldImage);
         if (!qs('.siteContainer')) {
             addSiteContainer();
         }
         qs('.siteContainer').style.opacity = 1;
-        qs('.empathyBar').style.display = 'none';
+    }
+
+    function renderingFinished(modifiedImageCanvas) {
+        var newImage;
+        qs('button.revert').classList.remove('hidden');
+        qs('button.slideComparison').classList.remove('hidden');
+        newImage = newElement('img', 'colorSimulation');
+        newImage.setAttribute('src', modifiedImageCanvas.toDataURL());
+        qs('body').appendChild(newImage);
+        animations.fadeOut(qs('.siteContainer'));
+        animations.fadeIn(qs('.empathyBar'));
     }
 
     function startComparison(){
         var body = qs('body');
-        var coloredImage = qs('.colorAlteration');
+        var coloredImage = qs('.colorSimulation');
         coloredImage.style.maxWidth = 'inherit';
         coloredImage.style.position = 'inherit';
         coloredImage.style.zIndex = 'inherit';
@@ -113,6 +97,7 @@ function ColorBlindnessSimulator() {
 function SlideWindow () {
     var self = newElement('div', 'slideWindow');
     self.style.height = documentHeight();
+    self.style.top = window.scrollY+'px';
     var slideHandle = new SlideHandle();
     self.appendChild(slideHandle);
     return self;

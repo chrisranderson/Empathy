@@ -21,3 +21,54 @@ window.setStyles = function (element, styles) {
         }
     }
 };
+
+window.animations = {};
+
+window.animations.linearGradient = function(target, options) {
+    var slopePositive;
+    var start = options.start;
+    var end = options.end;
+    var property = options.property;
+    var duration = options.duration;
+
+    slopePositive = end > start;
+    if (typeof duration == 'undefined') {
+        duration = 2000;
+    }
+
+    var animationStart = null;
+    window.requestAnimationFrame(function requestFrame(currentTime) {
+        if (animationStart == null) animationStart = currentTime;
+        var progress = currentTime - animationStart;
+
+        if (slopePositive) {
+            target.style.setProperty(property, start + progress/duration);
+        } else {
+            target.style.setProperty(property, start - progress/duration);
+        }
+
+        if (progress < duration) {
+            requestAnimationFrame(requestFrame);
+        } else {
+            target.style.setProperty(property, end);
+        }
+    });
+};
+
+window.animations.fadeIn = function (element, duration) {
+    window.animations.linearGradient(element, {
+        property: 'opacity',
+        duration: duration,
+        start: 0,
+        end: 1
+    });
+};
+
+window.animations.fadeOut = function(element, duration) {
+    window.animations.linearGradient(element, {
+        property: 'opacity',
+        duration: duration,
+        start: 1,
+        end: 0
+    });
+};
