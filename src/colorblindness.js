@@ -26,15 +26,19 @@ function ColorBlindnessSimulator() {
 
         var type = event.target.getAttribute('value');
         var screenshot;
-        chrome.runtime.sendMessage({name: 'screenshot'}, function screenshotComplete(dataUrl) {
-            screenshot = newElement('img');
-            screenshot.setAttribute('src', dataUrl);
 
-            // TODO: feed color.vision the dataURL directly
-            Color.Vision.Simulate(screenshot, {
-                type: type, callback: renderingFinished
+        setTimeout(function () {
+            chrome.runtime.sendMessage({name: 'screenshot'}, function screenshotComplete(dataUrl) {
+                screenshot = newElement('img');
+                screenshot.setAttribute('src', dataUrl);
+
+                // TODO: feed color.vision the dataURL directly
+                Color.Vision.Simulate(screenshot, {
+                    type: type, callback: renderingFinished
+                });
             });
-        });
+        }, 0);
+
         //html2canvas().then(function (screenshotCanvas) {
         //    screenshot = newElement('img');
         //    screenshot.setAttribute('src', screenshotCanvas.toDataURL());
