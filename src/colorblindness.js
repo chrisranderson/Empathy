@@ -1,4 +1,4 @@
-function ColorBlindnessSimulator() {
+function ColorBlindnessSimulator(empathyBar) {
 
     var self = newElement('div', 'item');
     self.innerHTML = '' +
@@ -17,19 +17,20 @@ function ColorBlindnessSimulator() {
 
     self.querySelector('div.simulationOptions').addEventListener('click', blindnessTypeSelected);
     self.querySelector('button.slideComparison').addEventListener('click', startComparison);
+    self.querySelector('button.revert').addEventListener('click', revertToOriginal);
 
     return self;
+
 
     // The initial event
     function blindnessTypeSelected(event) {
         preparePage();
 
         var type = event.target.getAttribute('value');
-        var screenshot;
 
         setTimeout(function () {
             chrome.runtime.sendMessage({name: 'screenshot'}, function screenshotComplete(dataUrl) {
-                screenshot = newElement('img');
+                var screenshot = newElement('img');
                 screenshot.setAttribute('src', dataUrl);
 
                 // TODO: feed color.vision the dataURL directly
@@ -38,23 +39,13 @@ function ColorBlindnessSimulator() {
                 });
             });
         }, 0);
-
-        //html2canvas().then(function (screenshotCanvas) {
-        //    screenshot = newElement('img');
-        //    screenshot.setAttribute('src', screenshotCanvas.toDataURL());
-        //    // TODO: feed color.vision the canvas directly
-        //    Color.Vision.Simulate(screenshot, {
-        //        type: type, callback: renderingFinished
-        //    });
-        //});
     }
 
     // Called before
     function preparePage(){
-        qs('.empathyBar').style.opacity = 0;
-
+        empathyBar.style.opacity = 0;
         var oldImage = qs('.colorSimulation');
-        if (oldImage) qs('body').removeChild(oldImage);
+        if (oldImage) oldImage.remove();
         if (!qs('.siteContainer')) {
             addSiteContainer();
         }
@@ -69,7 +60,7 @@ function ColorBlindnessSimulator() {
         newImage.setAttribute('src', modifiedImageCanvas.toDataURL());
         qs('body').appendChild(newImage);
         animations.fadeOut(qs('.siteContainer'));
-        animations.fadeIn(qs('.empathyBar'));
+        animations.fadeIn(empathyBar);
     }
 
     function startComparison(){
@@ -87,20 +78,24 @@ function ColorBlindnessSimulator() {
 
     function addSiteContainer(){
         var body = qs('body');
-        var children = [].slice.apply(body.children);
         var siteContainer = newElement('div', 'siteContainer');
-        children.forEach(function (child) {
-            if (child.classList.contains('empathyBar')) return;
-            siteContainer.appendChild(child);
-        });
-        body.appendChild(siteContainer);
+        wrapInner(body, siteContainer, {exception: 'empathyBar'})
     }
+}
 
+function revertToOriginal() {
+    var slideWindow = qs('.slideWindow');
+    var colorSimulation = qs('.colorSimulation');
+    var siteContainer = qs('.siteContainer');
+
+    if (colorSimulation) colorSimulation.remove();
+    if (slideWindow) slideWindow.remove();
+    siteContainer.style.opacity = 1;
 }
 
 function SlideWindow () {
     var self = newElement('div', 'slideWindow');
-    self.style.height = documentHeight();
+    self.style.height = getDocumentHeight();
     self.style.top = window.scrollY+'px';
     var slideHandle = new SlideHandle();
     self.appendChild(slideHandle);
@@ -118,13 +113,13 @@ function SlideHandle () {
     return self;
 }
 
-function documentHeight() {
-    var body = document.body,
-        html = document.documentElement;
-
-    return Math.max(body.scrollHeight, body.offsetHeight,
-            html.clientHeight, html.scrollHeight, html.offsetHeight)+'px';
-}
-
-
+// This was originally used instead of chrome's screenshot. Might be useful later.
+//html2canvas().then(function (screenshotCanvas) {
+//    screenshot = newElement('img');
+//    screenshot.setAttribute('src', screenshotCanvas.toDataURL());
+//    // TODO: feed color.vision the canvas directly
+//    Color.Vision.Simulate(screenshot, {
+//        type: type, callback: renderingFinished
+//    });
+//});
 

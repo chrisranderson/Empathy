@@ -1,6 +1,6 @@
 function EmpathyBar () {
     self = newElement('div', 'empathyBar');
-    self.appendChild(new ColorBlindnessSimulator());
+    self.appendChild(new ColorBlindnessSimulator(self));
 
     self.load = function(){
         qs('body').appendChild(this);

@@ -22,6 +22,23 @@ window.setStyles = function (element, styles) {
     }
 };
 
+window.wrapInner = function (target, wrapper, options) {
+    var children = [].slice.apply(target.children);
+    children.forEach(function (child) {
+        if (child.classList.contains(options.exception)) return;
+        wrapper.appendChild(child);
+    });
+    target.appendChild(wrapper);
+};
+
+window.getDocumentHeight = function() {
+    var body = document.body,
+        html = document.documentElement;
+
+    return Math.max(body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight)+'px';
+};
+
 window.animations = {};
 
 window.animations.linearGradient = function(target, options) {
