@@ -12,7 +12,7 @@ Features
 --------------
 - Simulate colorblindness, and use a sliding window to compare it to the original
 
-![screenshot](http://raw.github.com/chrisranderson/empathy/screenshot.png)
+![screenshot](http://raw.github.com/chrisranderson/empathy/master/screenshot.png)
 
 Ideas / game plan
 --------
