@@ -12,6 +12,8 @@ Features
 --------------
 - Simulate colorblindness, and use a sliding window to compare it to the original
 
+![screenshot](http://raw.github.com/chrisranderson/empathy/screenshot.png)
+
 Ideas / game plan
 --------
 - Blindness? Maybe use TTS service to help with this.

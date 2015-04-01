@@ -29,11 +29,15 @@ function ColorBlindnessSimulator(empathyBar) {
         var type = event.target.getAttribute('value');
 
         setTimeout(function () {
+
+            // Ask Chrome for a screenshot
             chrome.runtime.sendMessage({name: 'screenshot'}, function screenshotComplete(dataUrl) {
                 var screenshot = newElement('img');
                 screenshot.setAttribute('src', dataUrl);
 
                 // TODO: feed color.vision the dataURL directly
+
+                // Simulate the colorblindness
                 Color.Vision.Simulate(screenshot, {
                     type: type, callback: renderingFinished
                 });
