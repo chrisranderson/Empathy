@@ -21,3 +21,5 @@ Ideas / game plan
 - Hearing loss (mild to severe, high tone, low tone, deaf-blindness?)
 - Motor disabilities (requiring tab navigation only, Parkinson's)
 - Cognitive disorders? Scrambled text, maybe
+
+<a href="http://google.com" target="_blank">test</a>
