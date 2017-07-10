@@ -5,11 +5,13 @@ A Chrome extension to help developers understand how people with colorblindness 
 
 To use:
 
-1. Clone the repo
-2. Go to chrome://extensions
-3. Check the "Developer mode" checkbox in the top right corner
-4. Load unpacked extension - give it the root directory for the repo
+1. Clone the repo.
+2. Go to [chrome://extensions](chrome://extensions).
+3. Check the "Developer mode" checkbox in the top right corner.
+4. Load unpacked extension - give it the root directory for the repo.
 
-The extension will only simulate different types of colorblindness:
+The extension will simulate types of colorblindness:
 
 ![screenshot](http://raw.github.com/chrisranderson/empathy/master/screenshot.png)
+
+This is an old project, so I only recently updated it to restore the basic functionality. The sliding window using the "Comapre to original" button currently does not work.
