@@ -1,3 +1,11 @@
+window.newElement = function (type, newClass, styles) {
+    var output = document.createElement(type);
+    if (typeof newClass != 'undefined') output.classList.add(newClass);
+    if (typeof styles != 'undefined') window.setStyles(output, styles);
+    return output;
+};
+
+
 function EmpathyBar () {
     self = newElement('div', 'empathyBar');
     self.appendChild(new ColorBlindnessSimulator(self));

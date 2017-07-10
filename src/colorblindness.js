@@ -5,7 +5,7 @@ function ColorBlindnessSimulator(empathyBar) {
     '<div class="row">' +
     '   <label>Colorblindness</label>' +
     '   <button class="hidden revert">Revert</button>' +
-    '   <button class="slideComparison hidden">Compare to original</button>' +
+    // '   <button class="slideComparison hidden">Compare to original</button>' +
     '</div>'+
     '<div class="simulationOptions">' +
     '    <button value="achromatope">Achromatope</button>' +
@@ -16,7 +16,7 @@ function ColorBlindnessSimulator(empathyBar) {
     '</div>';
 
     self.querySelector('div.simulationOptions').addEventListener('click', blindnessTypeSelected);
-    self.querySelector('button.slideComparison').addEventListener('click', startComparison);
+    // self.querySelector('button.slideComparison').addEventListener('click', startComparison);
     self.querySelector('button.revert').addEventListener('click', revertToOriginal);
 
     return self;
@@ -59,7 +59,7 @@ function ColorBlindnessSimulator(empathyBar) {
     function renderingFinished(modifiedImageCanvas) {
         var newImage;
         qs('button.revert').classList.remove('hidden');
-        qs('button.slideComparison').classList.remove('hidden');
+        // qs('button.slideComparison').classList.remove('hidden');
         newImage = newElement('img', 'colorSimulation');
         newImage.setAttribute('src', modifiedImageCanvas.toDataURL());
         qs('body').appendChild(newImage);
@@ -126,4 +126,3 @@ function SlideHandle () {
 //        type: type, callback: renderingFinished
 //    });
 //});
-
