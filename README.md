@@ -7,7 +7,8 @@ To use:
 
 1. Clone the repo
 2. Go to chrome://extensions
-3. Load unpacked extension
+3. Check the "Developer mode" checkbox in the top right corner
+4. Load unpacked extension - give it the root directory for the repo
 
 The extension will only simulate different types of colorblindness:
 
