@@ -9,6 +9,9 @@ To use:
 2. Go to [chrome://extensions](chrome://extensions).
 3. Check the "Developer mode" checkbox in the top right corner.
 4. Load unpacked extension - give it the root directory for the repo.
+5. Open a new tab, press ctrl+0 to reset zoom (doesn't work with zoom).
+6. Click the yellow "e" extension button.
+7. Choose a type of colorblindness, revert, choose another, revert, etc.
 
 The extension will simulate types of colorblindness:
 
