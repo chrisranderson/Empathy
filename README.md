@@ -14,4 +14,4 @@ The extension will simulate types of colorblindness:
 
 ![screenshot](http://raw.github.com/chrisranderson/empathy/master/screenshot.png)
 
-This is an old project, so I only recently updated it to restore the basic functionality. The sliding window using the "Comapre to original" button currently does not work.
+This is an old project, so I only recently updated it to restore the basic functionality. The "Compare to original" button currently does not work, so I removed it.
